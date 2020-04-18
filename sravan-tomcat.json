@@ -1,0 +1,27 @@
+{
+    "builders": [{
+      "type": "amazon-ebs",
+      "region": "eu-west-1",
+      "vpc_id": "vpc-20040146",
+      "subnet_id": "subnet-bcba0ae6",
+      "source_ami": "ami-071f4ce599deff521",
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "ami_name": "sravan-tomcat"
+    }],
+    "provisioners": [
+        {
+                "type": "file",
+                "source": "files/",
+                "destination": "/tmp",
+                "direction": "upload"
+        },
+        {
+          "type": "shell",
+          "scripts": [
+              "scripts/setup.sh"
+        ],
+          "execute_command": "chmod +x {{ .Path }}; sh '{{ .Path }}'"
+        }
+      ]
+}
